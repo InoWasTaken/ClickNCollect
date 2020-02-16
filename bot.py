@@ -1,5 +1,5 @@
-import random
 import requests
+from db import *
 from flask import Flask, request
 from pymessenger.bot import Bot
 
@@ -72,7 +72,7 @@ def set_get_started(gs_obj):
     response = requests.post(
         request_endpoint,
         params=bot.auth_args,
-        json=gs_obj
+        json=gs_obj,
     )
     result = response.json()
     return result
@@ -99,4 +99,5 @@ if __name__ == "__main__":
             "payload": "started"
         }
     })
+    open_db()
     app.run(debug=True)
