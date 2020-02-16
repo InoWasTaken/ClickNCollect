@@ -1,4 +1,5 @@
 import requests
+from api import *
 from db import *
 from flask import Flask, request
 from pymessenger.bot import Bot
@@ -99,5 +100,6 @@ if __name__ == "__main__":
             "payload": "started"
         }
     })
-    open_db()
+    db = open_db()
+    api(app, db)
     app.run(debug=True)

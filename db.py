@@ -24,14 +24,16 @@ def create_db(conn):
             conn.execute(
                 f"INSERT INTO snacks (name,in_stock) VALUES ('{snack}', 1)")
     conn.commit()
-    conn.close()
+    return conn
 
 
 def open_db():
     try:
-        conn = sqlite3.connect('clickncollect.db')
+        conn = sqlite3.connect('clickncollect.db', check_same_thread=False)
+        conn.row_factory = lambda c, r: dict(
+            [(col[0], r[idx]) for idx, col in enumerate(c.description)])
     except:
         print("error while loading database.")
         sys.exit(1)
     print('Opened database successfully')
-    create_db(conn)
+    return create_db(conn)
