@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import ProductsRow from './ProductsRow'
 
-let tableau_test = [
-    {
-        "in_stock": 0,
-        "name": "coca",
-        "rowid": 1
-    },
-    {
-        "in_stock": 1,
-        "name": "ice tea",
-        "rowid": 2
-    }]
-
 function Products(props) {
-    const [products, setProducts] = useState(tableau_test)
-    function switchDisponibility(id) {
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const response = await fetch(`http://localhost:5000/${props.table}`)
+            const responseJSON = await response.json()
+            setProducts(responseJSON)
+        }
+        getProducts()
+    }, [props.table])
+
+    async function switchDisponibility(id) {
         const product = products.find((p) => p.rowid === id)
         product.in_stock = product.in_stock === 1 ? 0 : 1
+        const response = await fetch(`http://localhost:5000/${props.table}/${product.rowid}`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(product)
+            })
         setProducts([...products])
     }
-    console.log(products)
+
     return (
         <Table striped bordered hover>
             <thead>

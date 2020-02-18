@@ -2,9 +2,11 @@ import requests
 from api import *
 from db import *
 from flask import Flask, request
+from flask_cors import CORS
 from pymessenger.bot import Bot
 
 app = Flask(__name__)
+CORS(app)
 ACCESS_TOKEN = 'EAAkEI4VDUocBAPf6Jb6QEf6avRms21yuDMFXW5XbSOcB08znK5JCOpDGHua3TeQbQANZASrMsJHaIFhmuK9OmFjjLMHUJSn8m93RjI4AoPu7WpcH8zoQfGRIVxsSoHF5d19DJfTgjbNtOrC0iIHtOB7phTivwXOEslUNEZAQxdMAsSTrMM9PLWvVkEjqoZD'
 VERIFY_TOKEN = 'kWGeLL6QnSAjpN9M3txuZUoY8AnDkVRUvnu'
 bot = Bot(ACCESS_TOKEN)
