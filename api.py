@@ -23,5 +23,6 @@ def api(app, db):
             f"UPDATE {product_type} SET in_stock = ? WHERE rowid = ?", (request.json['in_stock'], id))
         cursor = db.execute(
             f"SELECT name, in_stock, rowid FROM {product_type} WHERE rowid = ?", (id,))
+        db.commit()
         products = cursor.fetchone()
         return jsonify(products)
