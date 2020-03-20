@@ -23,6 +23,9 @@ def create_db(conn):
         for snack in snacks:
             conn.execute(
                 f"INSERT INTO snacks (name,in_stock) VALUES ('{snack}', 1)")
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS orders (items TEXT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
+    print("Table orders created successfully")
     conn.commit()
     return conn
 
