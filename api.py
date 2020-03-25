@@ -26,3 +26,10 @@ def api(app, db):
         db.commit()
         products = cursor.fetchone()
         return jsonify(products)
+
+    @app.route("/orders", methods=['GET'])
+    def get_orders():
+        cursor = db.execute(
+            "SELECT rowid, items FROM orders WHERE datetime(created_at, '+30 MINUTES') > datetime('now')")
+        products = cursor.fetchall()
+        return jsonify(products)

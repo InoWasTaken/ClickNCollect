@@ -7,7 +7,7 @@ function Products(props) {
 
     useEffect(() => {
         const getProducts = async () => {
-            const response = await fetch(`http://localhost:5000/${props.table}`)
+            const response = await fetch(`${process.env.REACT_APP_API_HOST}/${props.table}`)
             const responseJSON = await response.json()
             setProducts(responseJSON)
         }
@@ -17,7 +17,7 @@ function Products(props) {
     async function switchDisponibility(id) {
         const product = products.find((p) => p.rowid === id)
         product.in_stock = product.in_stock === 1 ? 0 : 1
-        const response = await fetch(`http://localhost:5000/${props.table}/${product.rowid}`,
+        await fetch(`${process.env.REACT_APP_API_HOST}/${props.table}/${product.rowid}`,
             {
                 method: 'PATCH',
                 headers: {
